@@ -3,12 +3,12 @@ import CountriesList from './components/CountriesList';
 import Navbar from './components/Navbar';
 import { Routes, Route } from 'react-router-dom';
 import CountriesDetails from './components/CountriesDetails';
-import coutriesJson from './countries.json';
+//import coutriesJson from './countries.json';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function App() {
-  const [countries, setCountry] = useState(coutriesJson);
+  const [countries, setCountry] = useState([]);
 
   useEffect(() => {
     axios
@@ -21,6 +21,9 @@ function App() {
       });
   }, []);
 
+  if (countries.length === 0) {
+    return <div>Loading </div>;
+  }
   return (
     <div className="App">
       <Navbar />

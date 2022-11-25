@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const CountriesDetails = ({ countries }) => {
   const params = useParams();
@@ -7,9 +7,17 @@ const CountriesDetails = ({ countries }) => {
 
   console.log(countries);
 
-  const countryAlpha3 = countries.find((elem) =>
-    elem.alpha3Code === id ? elem : null
-  );
+  const countryAlpha3 = countries.find((elem) => elem.alpha3Code === id);
+
+  let oneCountry;
+  for (let i = 0; i < countries.length; i++) {
+    const country = countries[i];
+    if (country.alpha3Code === id) {
+      oneCountry = country;
+      break;
+    }
+  }
+  console.log(oneCountry, countryAlpha3);
 
   return (
     <div className="col-7">
@@ -32,10 +40,19 @@ const CountriesDetails = ({ countries }) => {
             <td>Borders</td>
             <td>
               <ul>
-                <li>
+                {countryAlpha3.borders.map((element) => {
+                  return (
+                    <li>
+                      <Link to={`/${element}`}>{element}</Link>
+                    </li>
+                  );
+                })}
+
+                {/* <li>
                   <a href="/AND">Andorra</a>
-                </li>
-                <li>
+                </li> */}
+
+                {/* <li>
                   <a href="/BEL">Belgium</a>
                 </li>
                 <li>
@@ -55,7 +72,7 @@ const CountriesDetails = ({ countries }) => {
                 </li>
                 <li>
                   <a href="/CHE">Switzerland</a>
-                </li>
+                </li> */}
               </ul>
             </td>
           </tr>
